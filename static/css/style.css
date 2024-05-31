@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+}
+
+header {
+    background-color: black;
+    color: white;
+    width: 100%;
+    padding: 0.2vh;
+}
+
+.login-container {
+    text-align: center;
+    display: block;
+    background-color: aliceblue;
+    margin: 20vh auto;
+    max-width: 20%;
+    padding: 5vh;
+}
+
+.login-container input {
+    width: 90%;
+    box-sizing: border-box;
+    padding: 1vh;
+    margin: 2vh auto;
+}
+
+.login-form button {
+    background: black;
+    color: white;
+    width: 90%;
+    padding: 2vh;
+    outline: none;
+    border: none;
+}

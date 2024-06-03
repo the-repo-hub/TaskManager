@@ -16,8 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
+
+import login.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', include('login.urls'))
+    path('login/', login.views.UserLogin.as_view(), name='login'),
+    path('logout/', login.views.UserLogout.as_view(), name='logout'),
+    path('tasks/', include(('tasks.urls', 'tasks')), name='tasks'),
+    path('', lambda request: redirect('tasks:board'))
 ]

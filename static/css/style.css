@@ -2,12 +2,59 @@ body {
     margin: 0;
 }
 
+/* header */
+
 header {
     background-color: black;
-    color: white;
-    width: 100%;
-    padding: 0.2vh;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
 }
+
+header .main-logo {
+    display: flex;
+    height: 100%;
+}
+
+header .main-logo-link {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+header .header-right {
+    text-align: right;
+    display: flex;
+    height: 100%;
+}
+
+.header-right a {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.header-right button {
+    color: white;
+    text-transform: uppercase;
+    display: flex;
+    border: none;
+    background: none;
+    height: 100%;
+    text-align: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+/* after header, login content in <main> */
 
 .login-container {
     text-align: center;

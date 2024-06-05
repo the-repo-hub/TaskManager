@@ -1,5 +1,41 @@
 {% extends '_base.html' %}
 
 {% block content %}
-    
+    <div class="boards">
+        <div class="board">
+            <h2>Available</h2>
+            <div id="available" class="board-content">
+                <div class="board-block">
+                    <a>Task</a>
+                    <a>User</a>
+                </div>
+                <div class="board-block">
+                    <a>Task 2</a>
+                    <a>User</a>
+                </div>
+                <div class="board-block">
+                    <a class="board-block-name">Task3</a>
+                    <a class="board-block-user">User</a>
+                </div>
+            </div>
+        </div>
+        <div class="board">
+            <h2>In work</h2>
+            <div id="in-work" class="board-content">
+
+            </div>
+        </div>
+        <div class="board">
+            <h2>On review</h2>
+            <div id="on-review" class="board-content">
+
+            </div>
+        </div>
+        <div class="board">
+            <h2>Done</h2>
+            <div id="done" class="board-content">
+                
+            </div>
+        </div>
+    </div>
 {% endblock %}

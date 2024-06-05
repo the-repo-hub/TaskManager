@@ -9,11 +9,11 @@ header {
     height: 10vh;
     display: flex;
     justify-content: space-between;
+    font-weight: bold;
 }
 
 header .main-logo {
     display: flex;
-    height: 100%;
 }
 
 header .main-logo-link {
@@ -23,7 +23,6 @@ header .main-logo-link {
     text-align: center;
     display: flex;
     align-items: center;
-    font-weight: bold;
     padding-left: 2vw;
     padding-right: 2vw;
 }
@@ -31,10 +30,14 @@ header .main-logo-link {
 header .header-right {
     text-align: right;
     display: flex;
-    height: 100%;
 }
 
-.header-right a {
+header .header-left {
+    text-align: left;
+    display: flex;
+}
+
+.item {
     text-decoration: none;
     color: white;
     text-transform: uppercase;
@@ -42,7 +45,7 @@ header .header-right {
     align-items: center;
 }
 
-.header-right button {
+header button {
     color: white;
     text-transform: uppercase;
     display: flex;
@@ -51,7 +54,6 @@ header .header-right {
     height: 100%;
     text-align: center;
     align-items: center;
-    font-weight: bold;
 }
 
 /* after header, login content in <main> */
@@ -79,4 +81,45 @@ header .header-right {
     padding: 2vh;
     outline: none;
     border: none;
+}
+
+/* tasks board section */
+
+.boards {
+    display: flex;
+}
+
+.board {
+    width: 25%;
+}
+
+.board h2 {
+    display: block;
+    margin: 20px
+}
+
+.board-content {
+    background-color: aliceblue;
+    height: 500px;
+    margin: 20px
+}
+
+.board-block {
+    height: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+}
+
+.board-block a {
+    text-decoration: none;
+}
+
+.board-block-user {
+    text-decoration: none;
+    display: block;
+    text-align: right;
+    margin-top: auto;
 }

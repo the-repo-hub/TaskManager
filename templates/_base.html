@@ -7,16 +7,26 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-<header>
+<header class="main-header">
     <div class="main-logo">
         <a class="main-logo-link" href="/">Task Manager</a>
     </div>
     {% block header %}
+        <div class="header-left">
+            <div class="item">
+                <a>Tasks</a>
+            </div>
+            <div class="item">
+                <a>Users</a>
+            </div>
+        </div>
         <div class="header-right">
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit">logout</button>
-            </form>
+            <div class="item">
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">logout</button>
+                </form>
+            </div>
         </div>
     {% endblock %}
 </header>

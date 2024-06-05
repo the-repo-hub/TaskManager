@@ -13,7 +13,3 @@ class TaskBaseMixin(LoginRequiredMixin):
 class TaskBoard(TaskBaseMixin, ListView):
 
     template_name = 'tasks/board.html'
-
-    def get_context_data(self, **kwargs):
-
-        return {'tasks': Task.objects.filter(user=self.request.user)}

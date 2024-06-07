@@ -2,9 +2,8 @@ from django.db.models import Choices
 
 
 class TaskChoices(Choices):
-    processing = 'Processing'
+    in_work = 'In work'
     available = 'Available'
-    finished = 'Finished'
-    error = 'Error'
+    on_review = 'On review'
     done = 'Done'
     cancelled = 'Cancelled'

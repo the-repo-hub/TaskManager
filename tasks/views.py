@@ -8,8 +8,17 @@ class TaskBaseMixin(LoginRequiredMixin):
 
     queryset = Task.objects.all()
     model = Task
+    context_object_name = 'object'
 
 
 class TaskBoard(TaskBaseMixin, ListView):
 
     template_name = 'tasks/board.html'
+
+
+class TaskList(TaskBaseMixin, ListView):
+
+    template_name = 'tasks/list.html'
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data()

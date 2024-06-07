@@ -1,0 +1,20 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/dataTables.css' %}">
+    <script src="{% static 'js/jquery-3.7.1.js' %}"></script>
+    <script src="{% static 'js/dataTables.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <table id="listTable">
+    </table>
+{% endblock %}
+{% block custom_js %}
+    
+<script>
+    let objects = {{ object_list }}
+    let table = new DataTable('#listTable');
+</script>
+{% endblock %}

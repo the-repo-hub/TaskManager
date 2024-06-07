@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block custom_css %}
+    {% endblock %}
 </head>
 <body>
 <header class="main-header">
@@ -39,4 +41,6 @@
     {% endblock %}
 </main>
 </body>
+{% block custom_js %}
+{% endblock %}
 </html>

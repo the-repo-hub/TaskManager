@@ -8,7 +8,7 @@ User = get_user_model()
 class Task(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=500)
-    user = models.ForeignKey(User, on_delete=models.SET_DEFAULT, blank=True, default=None, related_name='tasks')
+    user = models.ForeignKey(User, on_delete=models.SET_DEFAULT, blank=True, default=None, null=True, related_name='tasks')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deadline = models.DateTimeField()

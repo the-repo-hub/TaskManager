@@ -30,7 +30,11 @@ header .left-container {
 }
 
 .dropdown:hover {
-    background-color: green;
+    background-color: orangered;
+}
+
+.dropdown a:hover {
+    background-color: orangered;
 }
 
 .dropdown:hover .dropdown-content {
@@ -39,13 +43,16 @@ header .left-container {
 
 .dropdown-content {
     position: absolute;
-    padding: 12px 16px;
-    background-color: green;
-    margin-top: auto;
+    background-color: black;
+    margin-top: 30px;
+    display: none;
 }
 
 .dropdown a {
     display: block;
+    text-decoration: none;
+    color: white;
+    padding: 15px;
 }
 
 
@@ -100,6 +107,7 @@ header form button {
 
 .boards {
     display: flex;
+    margin: 40px;
 }
 
 .board {
@@ -121,7 +129,7 @@ header form button {
     height: 100px;
     margin-top: 20px;
     margin-bottom: 20px;
-    background-color: green;
+    background-color: orangered;
     display: flex;
     flex-direction: column;
 }

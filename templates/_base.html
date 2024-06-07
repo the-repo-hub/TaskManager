@@ -8,25 +8,28 @@
 </head>
 <body>
 <header class="main-header">
-    <div class="main-logo">
-        <a class="main-logo-link" href="/">Task Manager</a>
-    </div>
+    <a class="main-logo" href="/">Task Manager</a>
     {% block header %}
-        <div class="header-left">
-            <div class="item">
-                <a>Tasks</a>
+        <div class="left-container">
+            <div class="dropdown">Tasks
+                <div class="dropdown-content">
+                    <a>Board</a>
+                    <a>List</a>
+                    <a>Create</a>
+                </div>
             </div>
-            <div class="item">
-                <a>Users</a>
+            <div class="dropdown">Users
+                <div class="dropdown-content">
+                    <a>List</a>
+                    <a>Create</a>
+                </div>
             </div>
         </div>
-        <div class="header-right">
-            <div class="item">
-                <form method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit">logout</button>
-                </form>
-            </div>
+        <div class="right-container">
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">logout</button>
+            </form>
         </div>
     {% endblock %}
 </header>

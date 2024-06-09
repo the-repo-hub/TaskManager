@@ -19,6 +19,3 @@ class TaskBoard(TaskBaseMixin, ListView):
 class TaskList(TaskBaseMixin, ListView):
 
     template_name = 'tasks/list.html'
-
-    def get_context_data(self, **kwargs):
-        return super().get_context_data()

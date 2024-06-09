@@ -3,18 +3,62 @@
 
 {% block custom_css %}
     <link rel="stylesheet" href="{% static 'css/dataTables.css' %}">
-    <script src="{% static 'js/jquery-3.7.1.js' %}"></script>
-    <script src="{% static 'js/dataTables.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-    <table id="listTable">
-    </table>
+    <div class="table-wrapper">
+        <table id="tasks-dt" class="table table-bordered dt-responsive nowrap w-100">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>User</th>
+                <th>Deadline</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
+
 {% block custom_js %}
-    
-<script>
-    let objects = {{ object_list }}
-    let table = new DataTable('#listTable');
-</script>
+
+    <script src="{% static 'js/jquery-3.7.1.js' %}"></script>
+    <script src="{% static 'js/dataTables.js' %}"></script>
+    <script>
+        function parseTable(data) {
+            dataTable = $("#tasks-dt").DataTable({
+                ...tableConfig,
+                data: data
+            });
+        }
+        // user render
+        DataTable.render.ellipsis = function () {
+            return function (data, type) {
+                return type === 'display' && data.length > 20 ?
+                    data.substr(0, 30) + '…' : data;
+            }
+        };
+        let dataTable = null;
+        let tableConfig = {
+            ordering: true,
+            paging: true,
+            columns: [
+                {name: "id", data: "id", width: "5%"},
+                {name: "title", data: "title"},
+                {name: "description", data: "description"},
+                {name: "user", data: "user"},
+                {name: "deadline", data: "deadline"},
+                {name: "status", data: "status"},
+            ],
+            columnDefs: [{
+                targets: 2,
+                render: DataTable.render.ellipsis()
+            }]
+        };
+        fetch(window.origin + '/api/tasks').then(data => data.json()).then(data => parseTable(data))
+    </script>
 {% endblock %}

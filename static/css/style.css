@@ -144,3 +144,9 @@ header form button {
     text-align: right;
     margin-top: auto;
 }
+
+/* tasks list dt section */
+
+.table-wrapper {
+    margin-top: 30px;
+}

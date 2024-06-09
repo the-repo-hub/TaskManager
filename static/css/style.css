@@ -29,18 +29,6 @@ header .left-container {
     padding: 30px;
 }
 
-.dropdown:hover {
-    background-color: orangered;
-}
-
-.dropdown a:hover {
-    background-color: orangered;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
 .dropdown-content {
     position: absolute;
     background-color: black;

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'tasks',
     'login',
     'rest_framework',
+    'django_bootstrap5',
+    'bootstrap_datepicker_plus',
 ]
 
 MIDDLEWARE = [

@@ -130,6 +130,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-LOGIN_REDIRECT_URL = ''
+LOGIN_REDIRECT_URL = '/tasks/'
 LOGIN_URL = '/login'
 LOGOUT_REDIRECT_URL = '/login'

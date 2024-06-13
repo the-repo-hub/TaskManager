@@ -6,7 +6,10 @@
 {% endblock %}
 
 {% block content %}
-    <div class="table-wrapper">
+    <div class="container mt-5">
+        <div class="mb-5" id='calendar'>
+
+        </div>
         <table id="tasks-dt" class="table table-bordered dt-responsive nowrap w-100">
             <thead>
             <tr>
@@ -28,8 +31,35 @@
 
     <script src="{% static 'js/jquery-3.7.1.js' %}"></script>
     <script src="{% static 'js/dataTables.js' %}"></script>
+    <script src="{% static 'js/fullcalendar.js' %}"></script>
     <script>
-        function parseTable(data) {
+
+        function getEvents(data) {
+            let events = []
+            for (let task of data) {
+                events.push(
+                    {
+                        title: task.title,
+                        start: task.deadline,
+                        backgroundColor: 'blue',
+                        borderColor: 'blue',
+                        textColor: 'white'
+                    }
+                )
+            }
+            return events;
+        }
+
+        function initCalendar(data) {
+            let calendarEl = document.getElementById('calendar');
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: getEvents(data),
+            });
+            calendar.render();
+        }
+
+        function initTable(data) {
             dataTable = $("#tasks-dt").DataTable({
                 ...tableConfig,
                 data: data
@@ -66,6 +96,14 @@
                 render: DataTable.render.ellipsis()
             }]
         };
-        fetch(window.origin + '/api/tasks').then(data => data.json()).then(data => parseTable(data))
+        
+        function initAll(data) {
+            initCalendar(data);
+            initTable(data);
+        }
+        
+        fetch(window.origin + '/api/tasks')
+            .then(data => data.json())
+            .then(data => initAll(data))
     </script>
 {% endblock %}

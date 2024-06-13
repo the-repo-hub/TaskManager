@@ -16,7 +16,7 @@ class Task(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    deadline = models.DateField()
+    deadline = models.DateField(blank=True, null=True)
     status = models.CharField(max_length=255, default=TaskChoices.available.value, choices=TaskChoices)
 
     def __str__(self):

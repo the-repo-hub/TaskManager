@@ -1,41 +1,74 @@
 {% extends '_base.html' %}
 
 {% block content %}
-    <div class="boards">
-        <div class="board">
-            <h2>Available</h2>
-            <div id="available" class="board-content">
-                <div class="board-block">
-                    <a>Task</a>
-                    <a>User</a>
-                </div>
-                <div class="board-block">
-                    <a>Task 2</a>
-                    <a>User</a>
-                </div>
-                <div class="board-block">
-                    <a class="board-block-name">Task3</a>
-                    <a class="board-block-user">User</a>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Available
+                    </div>
+                    <div class="list-group list-group-flush border rounded p-3" id="available">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="board">
-            <h2>In work</h2>
-            <div id="in-work" class="board-content">
-
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        In work
+                    </div>
+                    <div class="list-group list-group-flush border rounded p-3" id="in_work">
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="board">
-            <h2>On review</h2>
-            <div id="on-review" class="board-content">
-
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-warning text-white">
+                        On review
+                    </div>
+                    <div class="list-group list-group-flush border rounded p-3" id="on_review">
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="board">
-            <h2>Done</h2>
-            <div id="done" class="board-content">
-                
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        Done
+                    </div>
+                    <div class="list-group list-group-flush border rounded p-3" id="done">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+        function renderBoards(data) {
+            let available = document.getElementById('available');
+            let inWork = document.getElementById('in_work');
+            let on_review = document.getElementById('on_review');
+            let done = document.getElementById('done');
+            for (let task of data) {
+                let newEl = document.createElement('div')
+                newEl.classList.add('list-group-item', 'border', 'mb-2')
+                newEl.innerText = task.title
+                if (task.status === 'Available') {
+                    available.appendChild(newEl);
+                }
+                else if (task.status === 'In work') {
+                    inWork.appendChild(newEl)
+                }
+                else if (task.status === 'On review') {
+                    on_review.appendChild(newEl)
+                }
+                else if (task.status === 'Done') {
+                    done.appendChild(newEl);
+                }
+            }
+        }
+
+        fetch(window.origin + '/api/tasks').then(data => data.json()).then(data => renderBoards(data))
+    </script>
 {% endblock %}

@@ -35,6 +35,7 @@
                 data: data
             });
         }
+
         // user render
         DataTable.render.ellipsis = function () {
             return function (data, type) {
@@ -47,8 +48,14 @@
             ordering: true,
             paging: true,
             columns: [
-                {name: "id", data: "id", width: "5%"},
-                {name: "title", data: "title"},
+                {name: "id", data: "id"},
+                {
+                    name: "title",
+                    data: "id",
+                    render: function (data, type, row) {
+                        return '<a href="/tasks/' + data + '">' + row.title + '</a>';
+                    }
+                },
                 {name: "description", data: "description"},
                 {name: "executor", data: "executor"},
                 {name: "deadline", data: "deadline"},

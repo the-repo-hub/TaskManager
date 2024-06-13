@@ -1,0 +1,28 @@
+{% extends '_base.html' %}
+
+{% block content %}
+     <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2>{{ task.title }}</h2>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Description</h5>
+                <p class="card-text">{{ task.description }}</p>
+                <h5 class="card-title">Executor</h5>
+                <p class="card-text">{{ task.executor }}</p>
+                <h5 class="card-title">Deadline</h5>
+                <p class="card-text">{{ task.deadline }}</p>
+            </div>
+            <div class="card-footer text-end">
+                <a href="{% url 'tasks:list' %}" class="btn btn-primary">Back to List</a>
+            </div>
+        </div>
+    </div>
+     <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2>Comments</h2>
+            </div>
+    </div>
+{% endblock %}

@@ -1,41 +1,42 @@
 {% extends '_base.html' %}
+{% load static %}
 
 {% block content %}
-    <div class="container mt-4">
+    <div class="container-fluid mt-4">
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header bg-primary text-white fw-bold">
                         Available
                     </div>
-                    <div class="list-group list-group-flush border rounded p-3" id="available">
+                    <div class="list-group list-group-flush border rounded p-3" id="available" data-name="Available">
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-header bg-danger text-white">
+                    <div class="card-header bg-danger text-white fw-bold">
                         In work
                     </div>
-                    <div class="list-group list-group-flush border rounded p-3" id="in_work">
+                    <div class="list-group list-group-flush border rounded p-3" id="in-work" data-name="In work">
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-header bg-warning text-white">
+                    <div class="card-header bg-warning text-white fw-bold">
                         On review
                     </div>
-                    <div class="list-group list-group-flush border rounded p-3" id="on_review">
+                    <div class="list-group list-group-flush border rounded p-3" id="on-review" data-name="On review">
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-header bg-success text-white">
+                    <div class="card-header bg-success text-white fw-bold">
                         Done
                     </div>
-                    <div class="list-group list-group-flush border rounded p-3" id="done">
+                    <div class="list-group list-group-flush border rounded p-3" id="done" data-name="Done">
                     </div>
                 </div>
             </div>
@@ -44,31 +45,77 @@
 {% endblock %}
 
 {% block custom_js %}
+    
+    <script src="{% static 'js/jquery-3.7.1.js' %}"></script>
+    <script src="{% static 'js/sortable.min.js' %}"></script>
     <script>
+
+        const allocations = {
+            'Available': document.getElementById('available'),
+            'In work': document.getElementById('in-work'),
+            'On review': document.getElementById('on-review'),
+            'Done': document.getElementById('done')
+        }
+
+        function getCookie(name) {
+            let cookieValue;
+            if (document.cookie && document.cookie !== '') {
+                let cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function createSortable(boardElement) {
+            return new Sortable(boardElement, {
+                group: 'shared',
+                animation: 150,
+                onEnd: function (event) {
+                    if (event.to === event.from) return;
+                    let taskId = event.item.querySelector('#task-id').innerText;
+                    let updateData = {
+                        status: event.to.dataset.name
+                    }
+                    fetch(window.origin + '/api/tasks/' + taskId + '/', {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify(updateData),
+                    })
+                }
+            })
+        }
+
         function renderBoards(data) {
-            let available = document.getElementById('available');
-            let inWork = document.getElementById('in_work');
-            let on_review = document.getElementById('on_review');
-            let done = document.getElementById('done');
             for (let task of data) {
-                let newEl = document.createElement('div')
-                newEl.classList.add('list-group-item', 'border', 'mb-2')
-                newEl.innerText = task.title
-                if (task.status === 'Available') {
-                    available.appendChild(newEl);
-                }
-                else if (task.status === 'In work') {
-                    inWork.appendChild(newEl)
-                }
-                else if (task.status === 'On review') {
-                    on_review.appendChild(newEl)
-                }
-                else if (task.status === 'Done') {
-                    done.appendChild(newEl);
-                }
+                let divElement = document.createElement('div')
+                divElement.classList.add('list-group-item', 'border', 'mb-2', 'd-flex', 'flex-column');
+                let spanTitle = document.createElement('span');
+                spanTitle.classList.add('order-1', 'm-2');
+                spanTitle.innerText = task.title;
+                spanTitle.id = 'task-title'
+                let spanId = document.createElement('span');
+                spanId.classList.add('order-3', 'm-2');
+                spanId.innerText = task.id;
+                spanId.id = 'task-id'
+                divElement.appendChild(spanTitle);
+                divElement.appendChild(spanId);
+                allocations[task.status].appendChild(divElement);
+            }
+
+            for (let key in allocations) {
+                createSortable(allocations[key]);
             }
         }
 
-        fetch(window.origin + '/api/tasks').then(data => data.json()).then(data => renderBoards(data))
+        fetch(window.origin + '/api/tasks/').then(data => data.json()).then(data => renderBoards(data))
     </script>
 {% endblock %}

@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
+
 from api.serializers import TaskSerializer
 from tasks.models import Task
-from rest_framework.permissions import IsAuthenticated
 
 
 class TaskViewSet(ModelViewSet):

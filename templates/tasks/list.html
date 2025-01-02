@@ -74,10 +74,7 @@
             }
         };
         let dataTable = null;
-        let tableConfig = {
-            ordering: true,
-            paging: true,
-            columns: [
+        let columns = [
                 {name: "id", data: "id"},
                 {
                     name: "title",
@@ -87,15 +84,21 @@
                     }
                 },
                 {name: "description", data: "description"},
-                {name: "executor", data: "executor"},
+                {name: "executor", data: "executor.username"},
                 {name: "deadline", data: "deadline"},
                 {name: "status", data: "status"},
-            ],
+            ]
+        columns.forEach(column => {column.defaultContent = 'No data'})
+        let tableConfig = {
+            ordering: true,
+            paging: true,
+            columns: columns,
             columnDefs: [{
                 targets: 2,
                 render: DataTable.render.ellipsis()
             }]
         };
+
         
         function initAll(data) {
             initCalendar(data);

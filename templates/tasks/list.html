@@ -29,25 +29,56 @@
 
 {% block custom_js %}
 
-    <script src="{% static 'js/jquery-3.7.1.js' %}"></script>
     <script src="{% static 'js/dataTables.js' %}"></script>
     <script src="{% static 'js/fullcalendar.js' %}"></script>
     <script>
+
+        function getCookie(name) {
+            let cookieValue;
+            if (document.cookie && document.cookie !== '') {
+                let cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
 
         function getEvents(data) {
             let events = []
             for (let task of data) {
                 events.push(
                     {
+                        taskId: task.id,
                         title: task.title,
                         start: task.deadline,
                         backgroundColor: 'blue',
                         borderColor: 'blue',
-                        textColor: 'white'
+                        textColor: 'white',
                     }
                 )
             }
             return events;
+        }
+
+        function updateDeadline(info) {
+            // fixme because getISOSting will return date in UTC timezone
+            let date = info.event.start;
+            date.setHours(date.getHours() + 3);
+            let updateData = {'deadline': date.toISOString().split('T')[0]}
+            fetch(window.origin + '/api/tasks/' + info.event.extendedProps.taskId + '/', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(updateData),
+            })
+
         }
 
         function initCalendar(data) {
@@ -55,6 +86,8 @@
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 events: getEvents(data),
+                editable: true,
+                eventDrop: updateDeadline,
             });
             calendar.render();
         }
@@ -75,20 +108,22 @@
         };
         let dataTable = null;
         let columns = [
-                {name: "id", data: "id"},
-                {
-                    name: "title",
-                    data: "id",
-                    render: function (data, type, row) {
-                        return '<a href="/tasks/' + data + '">' + row.title + '</a>';
-                    }
-                },
-                {name: "description", data: "description"},
-                {name: "executor", data: "executor.username"},
-                {name: "deadline", data: "deadline"},
-                {name: "status", data: "status"},
-            ]
-        columns.forEach(column => {column.defaultContent = 'No data'})
+            {name: "id", data: "id"},
+            {
+                name: "title",
+                data: "id",
+                render: function (data, type, row) {
+                    return '<a href="/tasks/' + data + '">' + row.title + '</a>';
+                }
+            },
+            {name: "description", data: "description"},
+            {name: "executor", data: "executor.username"},
+            {name: "deadline", data: "deadline"},
+            {name: "status", data: "status"},
+        ]
+        columns.forEach(column => {
+            column.defaultContent = 'No data'
+        })
         let tableConfig = {
             ordering: true,
             paging: true,
@@ -99,12 +134,12 @@
             }]
         };
 
-        
+
         function initAll(data) {
             initCalendar(data);
             initTable(data);
         }
-        
+
         fetch(window.origin + '/api/tasks')
             .then(data => data.json())
             .then(data => initAll(data))

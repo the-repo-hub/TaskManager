@@ -8,7 +8,6 @@
     {% load django_bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-    <!-- TODO: maybe it should be renamed -->
     {% block custom_css %}
     {% endblock %}
 </head>
@@ -54,8 +53,8 @@
     </div>
 </nav>
 <main>
-    {% block content %}
-    {% endblock %}
+{% block content %}
+{% endblock %}
 </main>
 </body>
 {% block custom_js %}

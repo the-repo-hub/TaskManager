@@ -1,10 +1,17 @@
 {% extends '_base.html' %}
+{% load static %}
+{% load bootstrap_icons %}
 
 {% block content %}
     <div class="container mt-5">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h2>{{ task.title }}</h2>
+                <div class="d-flex">
+                    <a class="m-2" href="{% url 'tasks:update' task.id %}">{% bs_icon 'pencil' %}</a>
+                    <a class="m-2" href="#" data-bs-toggle="modal"
+                       data-bs-target="#removeModal">{% bs_icon 'trash' %}</a>
+                </div>
             </div>
             <div class="card-body">
                 <h5 class="card-title">Description</h5>
@@ -15,11 +22,30 @@
                 <p class="card-text">{{ task.deadline }}</p>
             </div>
             <div class="card-footer text-start">
-                <a href="{% url 'tasks:update' task.pk %}" class="btn btn-danger">Edit</a>
-                <a href="{% url 'tasks:list' %}" class="btn btn-primary">Back</a>
+                <span>Last update: {{ task.updated_at }}</span>
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the task?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteTask()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
@@ -27,4 +53,18 @@
             </div>
         </div>
     </div>
+
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+        function deleteTask() {
+            fetch(window.origin + "/api/tasks/{{ task.id }}/", {
+                    method: 'delete',
+                    headers: {'Content-Type': 'application/json'}
+                }
+            )
+        window.location.href = window.origin + "/tasks/list/"
+        }
+    </script>
 {% endblock %}

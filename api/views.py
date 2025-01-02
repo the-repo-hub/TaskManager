@@ -6,8 +6,6 @@ from rest_framework.permissions import IsAuthenticated
 
 class TaskViewSet(ModelViewSet):
 
-    permission_classes = [IsAuthenticated]
-
     queryset = Task.objects.get_queryset()
     serializer_class = TaskSerializer
 

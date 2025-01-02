@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'tasks',
     'login',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_bootstrap5',
     'bootstrap_datepicker_plus',
+    'django_bootstrap_icons',
 ]
 
 MIDDLEWARE = [
@@ -56,9 +58,11 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ]
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
 ROOT_URLCONF = 'TaskManager.urls'
 

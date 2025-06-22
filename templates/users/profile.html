@@ -1,0 +1,29 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load bootstrap_icons %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h2>{{ user.title }}</h2>
+                <div class="d-flex">
+                    <a class="m-2" href="{% url 'tasks:update' user.id %}">{% bs_icon 'pencil' %}</a>
+                    <a class="m-2" href="#" data-bs-toggle="modal"
+                       data-bs-target="#removeModal">{% bs_icon 'trash' %}</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Description</h5>
+                <p class="card-text">{{ user.description }}</p>
+                <h5 class="card-title">Executor</h5>
+                <p class="card-text">{{ user.executor }}</p>
+                <h5 class="card-title">Deadline</h5>
+                <p class="card-text">{{ user.deadline }}</p>
+            </div>
+            <div class="card-footer text-start">
+                <span>Last update: {{ task.updated_at }}</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
